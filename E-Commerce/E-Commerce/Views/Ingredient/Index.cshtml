@@ -1,0 +1,62 @@
+﻿@model List<Ingredient>
+@{
+	ViewData["Title"] = "Ingredients List";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+	<h1 class="display-5 fw-bold text-primary mb-0">
+		<i class="fa-solid fa-bowl-food me-2"></i> Ingredients List
+	</h1>
+	@if (User.IsInRole("Admin"))
+	{
+		<a class="btn btn-primary btn-lg rounded-pill shadow-sm"
+		   asp-action="Create"
+		   asp-controller="Ingredient">
+			<i class="fa fa-plus-circle me-1"></i> Add New Ingredient
+		</a>
+	}
+</div>
+
+@if (Model is not null && Model.Any())
+{
+	<div class="card shadow-lg border-0 rounded-4">
+
+		<div class="card-body p-0">
+			<table class="table table-hover table-striped mb-0">
+				<thead class="table-dark">
+					<tr>
+						<th class="py-3 ps-4">Name</th>
+						<th class="text-center py-3">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td class="align-middle ps-4">
+								<strong>@item.Name</strong>
+							</td>
+							<td class="text-center align-middle">
+								<a asp-action="Details"
+								   asp-controller="Ingredient"
+								   asp-route-id="@item.Id"
+								   class="btn btn-outline-primary btn-sm rounded-pill px-3">
+									<i class="fa fa-eye"></i> View Details
+								</a>
+
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+}
+else
+{
+	<div class="alert alert-warning mt-4 text-center border-0 shadow-sm rounded-3 py-3">
+		<h4 class="alert-heading"><i class="fa fa-exclamation-triangle"></i> Oops!</h4>
+		<p class="mb-0">No Ingredients Found. Please add a new ingredient to get started.</p>
+	</div>
+}

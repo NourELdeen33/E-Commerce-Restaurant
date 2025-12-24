@@ -1,0 +1,61 @@
+﻿@model E_Commerce.ViewModels.AddIngerdientViewModel
+
+@{
+	ViewData["Title"] = "Create Ingredient";
+}
+
+<div class="container mt-5">
+	<div class="row justify-content-center">
+
+		<div class="col-md-5">
+			<div class="card shadow-lg border-0 rounded-4">
+
+				<!-- Card Header -->
+				<div class="card-header bg-primary text-white rounded-top-4">
+					<h4 class="mb-0">
+						<i class="fa-solid fa-plus"></i> Create New Ingredient
+					</h4>
+				</div>
+
+				<!-- Card Body -->
+				<div class="card-body p-4">
+
+					<form asp-action="Create">
+
+						<input type="hidden" asp-for="Id" />
+
+						<div class="mb-3">
+							<label asp-for="Name" class="form-label fw-bold">
+								<i class="fa-solid fa-carrot"></i> Ingredient Name
+							</label>
+							<input asp-for="Name" class="form-control form-control-lg" placeholder="Enter ingredient name..." />
+							<span asp-validation-for="Name" class="text-danger"></span>
+						</div>
+
+						<!-- Buttons -->
+						<div class="d-flex justify-content-between mt-4">
+
+							<a asp-action="Index" class="btn btn-outline-secondary">
+								<i class="fa-solid fa-arrow-left"></i> Back
+							</a>
+
+							<button type="submit" class="btn btn-success px-4">
+								<i class="fa-solid fa-check"></i> Create
+							</button>
+
+						</div>
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

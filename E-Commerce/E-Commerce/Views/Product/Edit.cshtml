@@ -1,0 +1,165 @@
+﻿@model E_Commerce.ViewModels.EditProdcutViewModel
+
+@{
+	ViewData["Title"] = "Edit";
+}
+
+
+
+<h2 class="mb-4 fw-bold text-primary">
+	<i class="fa fa-plus-circle"></i> Edit Dish
+</h2>
+
+<div class="row g-4">
+
+	<!-- LEFT FORM CARD -->
+	<div class="col-lg-6">
+		<div class="card shadow-lg border-0 rounded-4">
+			<div class="card-header bg-primary text-white rounded-top-4 py-3">
+				<h4 class="mb-0 fw-bold">
+					<i class="fa fa-box"></i> Product Details
+				</h4>
+			</div>
+
+			<div class="card-body p-4">
+
+				<form asp-action="Edit" asp-controller="Product" enctype="multipart/form-data">
+
+					<div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+					<!-- Name -->
+					<div class="mb-3">
+						<label asp-for="Name" class="form-label fw-semibold"></label>
+						<input asp-for="Name" class="form-control form-control-lg" />
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+
+					<!-- Description -->
+					<div class="mb-3">
+						<label asp-for="Description" class="form-label fw-semibold"></label>
+						<textarea asp-for="Description" rows="3"
+								  class="form-control form-control-lg"></textarea>
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+
+					<!-- Price + Stock -->
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<label asp-for="Price" class="form-label fw-semibold"></label>
+							<input asp-for="Price" class="form-control form-control-lg" />
+							<span asp-validation-for="Price" class="text-danger"></span>
+						</div>
+
+						<div class="col-md-6">
+							<label asp-for="Stock" class="form-label fw-semibold"></label>
+							<input asp-for="Stock" class="form-control form-control-lg" />
+							<span asp-validation-for="Stock" class="text-danger"></span>
+						</div>
+					</div>
+
+					<!-- Category -->
+					<div class="mb-4">
+						<label asp-for="CategoryId" class="form-label fw-semibold"></label>
+						<select class="form-select form-select-lg"
+								asp-for="CategoryId" asp-items="ViewBag.LoadCategories">
+							<option value="">-- Select Category --</option>
+						</select>
+						<span asp-validation-for="CategoryId" class="text-danger"></span>
+					</div>
+
+					<!-- Ingredients -->
+					<div class="mb-4">
+						<label class="form-label fw-semibold">Ingredients</label>
+						<div class="row g-2">
+							@foreach (Ingredient item in ViewBag.LoadIngerdients)
+							{
+								<div class="col-6">
+									<div class="form-check">
+										@{
+											bool isChecked = Model.IngerdientsId != null && Model.IngerdientsId.Contains(item.Id);
+										}
+										<input type="checkbox"
+											   class="form-check-input"
+											   name="IngerdientsId"
+											   value="@item.Id"
+											   @(isChecked ? "checked" : "") />
+										<label class="form-check-label">@item.Name</label>
+									</div>
+								</div>
+							}
+						</div>
+					</div>
+
+					<!-- Image -->
+					<div class="mb-4">
+						<label class="form-label fw-semibold" asp-for="ProductImage"></label>
+						<input type="file" asp-for="ProductImage" class="form-control form-control-lg" id="ProductImage" />
+						<small class="form-text text-muted">Accepted: .jpeg, .png, .jpg — Max 1MB</small>
+						<span asp-validation-for="ProductImage" class="text-danger"></span>
+					</div>
+
+					<!-- Buttons -->
+					<div class="d-flex gap-3 mt-4">
+						<button type="submit"
+								class="btn btn-primary btn-lg px-4 rounded-3">
+							<i class="fa fa-save"></i> Edit
+						</button>
+
+						<a asp-action="Index"
+						   class="btn btn-outline-secondary btn-lg px-4 rounded-3">
+							<i class="fa fa-arrow-left"></i> Back
+						</a>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- RIGHT IMAGE PREVIEW -->
+	<div class="col-lg-6">
+		<div class="card shadow-lg border-0 rounded-4"
+			 style="min-height: 350px; height: auto;">
+
+			<div class="card-header bg-primary text-white rounded-top-4 py-2 text-center">
+				<h5 class="mb-0 fw-bold"><i class="fa fa-image"></i> Image Preview</h5>
+			</div>
+
+			<div class="card-body text-center">
+				<img id="previewImage"
+					 src="~/images/@Model.CurrentImage"
+					 class="img-fluid rounded-4 border shadow-sm"
+					 style="
+                     max-height: 400px;
+                     width: auto;
+                     object-fit: contain;
+                     display: inline-block;
+                 " />
+			</div>
+
+		</div>
+	</div>
+
+
+
+</div>
+</div>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script>
+		$("#ProductImage").change(function () {
+			let reader = new FileReader();
+			reader.onload = function (e) {
+				$("#previewImage").attr("src", e.target.result);
+			};
+			reader.readAsDataURL(this.files[0]);
+		});
+	</script>
+
+}
+

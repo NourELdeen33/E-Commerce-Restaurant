@@ -1,0 +1,56 @@
+﻿@model List<CartItemViewModel>
+
+@{
+	ViewData["Title"] = "Checkout";
+	decimal grandTotal = Model.Sum(item => item.Total);
+}
+
+<h2 class="mb-4">🧾 Checkout</h2>
+
+@if (!Model.Any())
+{
+	<div class="alert alert-warning">
+		Your shopping cart is empty.
+	</div>
+}
+else
+{
+	<table class="table table-bordered text-center align-middle">
+		<thead class="table-dark">
+			<tr>
+				<th>Product</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>@item.ProductName</td>
+					<td>@item.Price.ToString("C")</td>
+					<td>@item.Quantity</td>
+					<td>@item.Total.ToString("C")</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	<div class="d-flex justify-content-end mb-4">
+		<h4>
+			Grand Total:
+			<span class="text-success">
+				@grandTotal.ToString("C")
+			</span>
+		</h4>
+	</div>
+
+	<form asp-action="PlaceOrder" method="post">
+		<div class="d-flex justify-content-end">
+			<button type="submit" class="btn btn-success btn-lg">
+				✔ Place Order
+			</button>
+		</div>
+	</form>
+}

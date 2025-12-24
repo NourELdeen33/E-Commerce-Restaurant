@@ -1,0 +1,84 @@
+﻿@model E_Commerce.ViewModels.LoginViewModel
+
+@{
+	ViewData["Title"] = "Login";
+}
+
+<div class="container my-5">
+	<div class="row justify-content-center">
+		<div class="col-md-5 col-lg-4">
+			<div class="card shadow-sm border-0 rounded-3">
+				<div class="card-body p-4 p-md-5">
+
+					<div class="text-center mb-4">
+						<h2 class="fw-bold">Welcome Back</h2>
+						<p class="text-muted small">Please enter your details</p>
+					</div>
+
+					<form asp-action="Login">
+						<div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+						<div class="mb-3">
+							<label asp-for="Email" class="form-label small fw-bold text-secondary"></label>
+							<input asp-for="Email" class="form-control bg-light border-0 py-2 shadow-none" placeholder="name@example.com" />
+							<span asp-validation-for="Email" class="text-danger small"></span>
+						</div>
+
+						<div class="mb-3">
+							<label asp-for="Password" class="form-label small fw-bold text-secondary"></label>
+							<input asp-for="Password" type="password" class="form-control bg-light border-0 py-2 shadow-none" placeholder="••••••••" />
+							<span asp-validation-for="Password" class="text-danger small"></span>
+						</div>
+
+						<div class="d-flex justify-content-between align-items-center mb-4">
+							<div class="form-check">
+								<input class="form-check-input shadow-none" asp-for="RememberMe" />
+								<label class="form-check-label small text-muted" asp-for="RememberMe">
+									@Html.DisplayNameFor(model => model.RememberMe)
+								</label>
+							</div>
+							<div>
+								<a asp-action="VerfiyEmail"
+								   asp-controller="Account"
+								   class="forgot-link">
+									Forgot password?
+								</a>
+							</div>
+
+						</div>
+
+						<div class="d-grid shadow-sm">
+							<button type="submit" class="btn btn-primary btn-lg fw-bold py-2" style="font-size: 0.9rem;">Sign In</button>
+						</div>
+					</form>
+
+					<div class="text-center mt-4">
+						<p class="small text-muted mb-0">
+							Don't have an account?
+							<a asp-action="Register" class="text-primary fw-bold text-decoration-none">Sign Up</a>
+						</p>
+					</div>
+					<style>
+						.forgot-link {
+							font-size: 0.8rem;
+							font-weight: 500;
+							color: #0d6efd;
+							text-decoration: none;
+							position: relative;
+						}
+
+							.forgot-link::after {
+								content: "";
+								position: absolute;
+								left: 0;
+								bottom: -2px;
+								width: 0;
+								height: 1px;
+								background-color: #0d6efd;
+								transition: width 0.3s ease;
+							}
+
+							.forgot-link:hover::after {
+								width: 100%;
+							}
+					</style>

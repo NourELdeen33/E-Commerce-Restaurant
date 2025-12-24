@@ -1,0 +1,138 @@
+﻿@model IEnumerable<Product>
+@{
+	ViewData["Title"] = "Menu Items";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-5 border-bottom pb-3">
+
+	<h1 class="display-5 fw-bold text-dark mb-0">
+		<i class="fa fa-utensils me-2 text-primary"></i> Menu Items
+	</h1>
+	@if (User.Identity.IsAuthenticated)
+	{
+		<a asp-action="Create" asp-controller="Product" class="btn btn-primary btn-lg rounded-pill shadow-lg">
+			<i class="fa fa-plus-circle me-1"></i> Add New Product
+
+		</a>
+	}
+</div>
+<div class="row justify-content-center mb-5">
+	<div class="col-md-8 col-lg-6">
+		<form asp-action="Index" asp-controller="Product" method="get" class="d-flex shadow-sm rounded-pill overflow-hidden border">
+			<span class="input-group-text bg-white border-0 ps-4">
+				<i class="fa-solid fa-magnifying-glass text-muted"></i>
+			</span>
+
+			<input type="search"
+				   name="searchDish"
+				   class="form-control border-0 shadow-none py-3 px-3"
+				   placeholder="Search by dish name..."
+				   aria-label="Search" />
+
+			<button class="btn btn-primary px-4 fw-bold shadow-none" type="submit">
+				Search
+			</button>
+
+			<a asp-action="Index"
+			   asp-controller="Product"
+			   asp-route-searchDish=""
+			   class="btn btn-light border-start px-3 d-flex align-items-center text-muted"
+			   title="Back to full list">
+				<i class="fa-solid fa-rotate-left"></i>
+			</a>
+		</form>
+
+		<div class="text-center mt-2">
+			<small class="text-muted">Can't find what you're looking for? Try a different keyword.</small>
+		</div>
+	</div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+
+		@foreach (var item in Model)
+		{
+			<div class="col">
+				<div class="card h-100 shadow-lg border-0 product-card-hover rounded-4 overflow-hidden">
+
+					<div class="product-image-container">
+						<img src="@Url.Content($"~/images/{item.ImageUrl}")"
+							 class="card-img-top product-image"
+							 alt="@item.Name"
+							 onerror="this.onerror=null;this.src='/images/placeholder.png';"
+							 style="height: 200px; object-fit: cover;" />
+
+						@if (item.Stock > 0)
+						{
+							<span class="badge bg-success position-absolute top-0 start-0 m-2 rounded-pill">In Stock</span>
+						}
+						else
+						{
+							<span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill">Out of Stock</span>
+						}
+					</div>
+
+
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title fw-bold text-truncate">@item.Name</h5>
+
+						<p class="card-text text-muted small flex-grow-1">
+							@if (!string.IsNullOrEmpty(item.Description) && item.Description.Length > 50)
+							{
+								@(item.Description.Substring(0, 50) + "...")
+							}
+							else
+							{
+								@item.Description
+							}
+						</p>
+
+						<p class="card-text">
+							Price: <strong class="text-primary fs-5">@item.Price.ToString("N2") $</strong>
+						</p>
+					</div>
+
+					<div class="card-footer bg-light d-flex justify-content-between gap-2 py-3">
+
+						<a href="/Product/ProductDetails?id=@item.Id"
+						   class="btn btn-outline-info flex-fill rounded-pill">
+							<i class="fa fa-eye"></i> View Details
+						</a>
+
+						<a href="/Cart/AddToCart?id=@item.Id"
+						   class="btn btn-success flex-fill rounded-pill">
+							<i class="fa fa-cart-plus"></i> Add to Cart
+						</a>
+
+					</div>
+
+				</div>
+			</div>
+		}
+	</div>
+}
+else
+{
+	<div class="alert alert-info text-center mt-5 p-4 rounded-4 shadow-sm">
+		<h4 class="alert-heading"><i class="fa fa-info-circle"></i> No Menu Items Found</h4>
+		<p class="mb-0">Please use the "Add New Product" button to create your first item.</p>
+	</div>
+}
+
+<style>
+	.product-card-hover:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+		transition: all 0.3s ease;
+	}
+
+	.product-card-hover {
+		transition: all 0.3s ease;
+	}
+
+	.product-image-container {
+		position: relative;
+	}
+</style>
