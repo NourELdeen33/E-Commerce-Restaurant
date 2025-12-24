@@ -56,7 +56,7 @@ namespace E_Commerce.Controllers
 
         }
         [HttpPost]
-
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AddIngerdientViewModel model)
         {
             if (!ModelState.IsValid)

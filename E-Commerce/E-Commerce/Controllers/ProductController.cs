@@ -104,6 +104,8 @@ namespace E_Commerce.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public async Task <IActionResult> Edit(EditProdcutViewModel model)
         {
             if (!ModelState.IsValid) 

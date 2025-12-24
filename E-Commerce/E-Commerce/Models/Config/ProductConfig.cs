@@ -18,7 +18,7 @@ namespace E_Commerce.Models.Config
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(200);
 
-            builder.Property(x=>x.ImageUrl)
+            builder.Property(x => x.ImageUrl)
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(200);
 
@@ -33,56 +33,55 @@ namespace E_Commerce.Models.Config
 
             builder.HasData(
                 new Product
- {
-     Id = 1,
-     Name = "Koshary",
-     Description = "A mix of rice, pasta, and lentils, topped with tomato sauce and crispy fried onions.",
-     Price = 65.00m,
-     Stock = 50,
-     CategoryId = 2 // Main Dishes
- },
-            
-                // International Dishes
+                {
+                    Id = 1,
+                    Name = "Koshary",
+                    Description = "A mix of rice, pasta, and lentils, topped with tomato sauce and crispy fried onions.",
+                    Price = 65.00m,
+                    Stock = 50,
+                    CategoryId = 2
+                },
+
+
                 new Product
-    {
-        Id = 2,
-        Name = "Cheeseburger",
-        Description = "A classic beef patty with cheese, lettuce, and tomato on a toasted bun.",
-        Price = 95.00m,
-        Stock = 80,
-        CategoryId = 2 // Main Dishes
-    },
+                {
+                    Id = 2,
+                    Name = "Cheeseburger",
+                    Description = "A classic beef patty with cheese, lettuce, and tomato on a toasted bun.",
+                    Price = 95.00m,
+                    Stock = 80,
+                    CategoryId = 2 
+                },
                 new Product
-    {
-        Id = 3,
-        Name = "Grilled Chicken",
-        Description = "Marinated grilled chicken breast served with a side of mixed vegetables.",
-        Price = 130.00m,
-        Stock = 45,
-        CategoryId = 2 // Main Dishes
-    },
-            
-                // Appetizer (CategoryId = 1)
+                {
+                    Id = 3,
+                    Name = "Grilled Chicken",
+                    Description = "Marinated grilled chicken breast served with a side of mixed vegetables.",
+                    Price = 130.00m,
+                    Stock = 45,
+                    CategoryId = 2 
+                },
+
+                
                 new Product
-    {
-        Id = 4,
-        Name = "Caesar Salad",
-        Description = "Crisp romaine lettuce, croutons, and Parmesan cheese with Caesar dressing.",
-        Price = 55.00m,
-        Stock = 60,
-        CategoryId = 1 // Appetizers
-    },
-            
-                // Dessert (CategoryId = 3)
+                {
+                    Id = 4,
+                    Name = "Caesar Salad",
+                    Description = "Crisp romaine lettuce, croutons, and Parmesan cheese with Caesar dressing.",
+                    Price = 55.00m,
+                    Stock = 60,
+                    CategoryId = 1 
+                },
+
                 new Product
-    {
-        Id = 5,
-        Name = "Chocolate Cake",
-        Description = "Rich, decadent chocolate layer cake.",
-        Price = 50.00m,
-        Stock = 35,
-        CategoryId = 3
-    }// Desserts               
+                {
+                    Id = 5,
+                    Name = "Chocolate Cake",
+                    Description = "Rich, decadent chocolate layer cake.",
+                    Price = 50.00m,
+                    Stock = 35,
+                    CategoryId = 3
+                }               
                 );
 
 
