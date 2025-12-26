@@ -8,7 +8,7 @@
 	<h1 class="display-5 fw-bold text-primary mb-0">
 		<i class="fa-solid fa-bowl-food me-2"></i> Ingredients List
 	</h1>
-	@if (User.IsInRole("Admin"))
+	@if (User.Identity.IsAuthenticated)
 	{
 		<a class="btn btn-primary btn-lg rounded-pill shadow-sm"
 		   asp-action="Create"
